@@ -12,6 +12,7 @@
   "dependencies": {
     "commander": "^14.0.2",
     "dotenv": "^17.2.3",
+    "inquirer": "^13.1.0",
     "zhipuai": "^2.0.0"
   }
 }

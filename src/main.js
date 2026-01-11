@@ -1,6 +1,8 @@
 import { program } from 'commander';
+import inquirer from 'inquirer';
 import { relativeToAbsolute } from './utils/paths.js'
 import { ReActAgent } from './core/ReActAgent.js';
+import { INQUIRER_USER_INPUT_CONFIG } from './configs/index.js';
 
 program
     .version('0.0.1')
@@ -11,11 +13,12 @@ program.parse(process.argv);
 const opts = program.opts();
 // node ./src/main.js -p ./src/page-a ---> { projectDirectory: './src/page-a' }
 
-function main(projectDirectory) {
+async function main(projectDirectory) {
     console.log('Agent projectDirectory 配置：', projectDirectory);
     const agent = new ReActAgent(projectDirectory);
 
-    agent.run('你是谁');
+    const { question } = await inquirer.prompt(INQUIRER_USER_INPUT_CONFIG)
+    agent.run(question);
 }
 
 main(relativeToAbsolute(opts.projectDirectory))
