@@ -1,3 +1,5 @@
+export { getReActAgentSystemPrompt } from './prompt-templates.js'
+
 export const INQUIRER_USER_INPUT_CONFIG = [{
     type: 'input',
     name: 'question',

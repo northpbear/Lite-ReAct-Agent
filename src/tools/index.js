@@ -6,7 +6,7 @@ import { execSync } from 'child_process';
  * 
  * @param {string} filePath 
  */
-function readFile(filePath) {
+export function readFile(filePath) {
     return readFileSync(filePath, 'utf-8');
 }
 
@@ -16,7 +16,7 @@ function readFile(filePath) {
  * @param {string} filePath 
  * @param {string} content 
  */
-function writeFile(filePath, content) {
+export function writeFile(filePath, content) {
     writeFileSync(filePath, content);
     return '执行成功'
 }
@@ -24,9 +24,9 @@ function writeFile(filePath, content) {
 /**
  * 执行终端命令的工具
  * 
- * @param {string} filePath 
+ * @param {string} command 
  */
-function runTerminalCommand(command) {
+export function runTerminalCommand(command) {
     try {
         // 默认配置：输出为utf8字符串，继承父进程的stdio（可直接打印命令输出）
         const defaultOptions = {
