@@ -15,14 +15,30 @@ export class ReActAgent {
         });
     }
 
-    run = (userPrompt) => {
+    run = async (userPrompt) => {
         const msgs = [
             {
                 role: 'system', content: this.genSystemPrompt()
             },
             { role: 'user', content: userPrompt }
         ];
-        this.invokeLLM(msgs)
+
+        while (true) {
+            const content = await this.invokeLLM(msgs);
+
+            const finalAnswer = this.extractTextFrom('finalAnswer', content);
+            if (finalAnswer) {
+                console.log('finalAnswer: ', finalAnswer);
+                return;
+            }
+
+            msgs.push({
+                role: 'assistant',
+                content,
+            })
+            const thought = this.extractTextFrom('thought', content);
+            console.log('thought: \n', thought)
+        }
     }
 
     genSystemPrompt = () => {
@@ -66,8 +82,14 @@ export class ReActAgent {
             messages,
             model: this.model
         })
-        console.log('大模型返回：', JSON.stringify(resp));
+        return resp.choices[0].message.content
     }
 
+    extractTextFrom = (XMLType, str) => {
+        const regex = new RegExp(`<${XMLType}>([\\s\\S]*?)<\/${XMLType}>`);
+        const match = str.match(regex);
 
+        const content = match ? match[1] : '';
+        return content;
+    }
 }
