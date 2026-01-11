@@ -11,4 +11,20 @@ export class ReActAgent {
             apiKey: env.ZHIPU_API_KEY,
         });
     }
+
+    run = (userPrompt) => {
+        const msgs = [
+            { role: 'user', content: userPrompt }
+        ];
+        this.invokeLLM(msgs)
+    }
+
+    invokeLLM = async (messages) => {
+        console.log('开始请求大模型');
+        const resp = await this.client.chat.completions.create({
+            messages,
+            model: this.model
+        })
+        console.log('大模型返回：', JSON.stringify(resp));
+    }
 }

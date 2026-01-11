@@ -1,5 +1,6 @@
 import { program } from 'commander';
 import { relativeToAbsolute } from './utils/paths.js'
+import { ReActAgent } from './core/ReActAgent.js';
 
 program
     .version('0.0.1')
@@ -12,7 +13,9 @@ const opts = program.opts();
 
 function main(projectDirectory) {
     console.log('Agent projectDirectory 配置：', projectDirectory);
+    const agent = new ReActAgent(projectDirectory);
 
+    agent.run('你是谁');
 }
 
 main(relativeToAbsolute(opts.projectDirectory))
